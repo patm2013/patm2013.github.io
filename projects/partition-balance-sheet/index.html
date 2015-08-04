@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Balance Sheet Hierachy</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/d3.min.js"></script> 
+<script src="js/accounts.js"></script>
+<script src="js/nouislider.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<link rel="stylesheet" href="css/nouislider.css">
+<style> 
+
+
+
+.sections {
+	stroke-width: 2px;
+}
+
+.container {
+	max-width: 100%;
+	width: 80%;
+}
+
+#heading {
+	text-align: 	center;	
+}
+
+svg {
+	margin: 	auto;
+	display: 	block;
+	width: 100%;
+	height: 100%;
+}
+
+#graph {
+	padding-bottom: 	5%;
+}
+
+#CenterText{
+	font-size: 2.75em;
+}
+</style> 
+
+
+</head>
+<body>
+
+<div class="container">
+	<div class="row">
+		<div class="four columns">
+			<h3>Description</h3>
+			<p>Light blue represents Assets. Orange represents Liabilities. Dark blue represents Stockholder's Equity. Inner rings represent the top-most categories (Assets, Liabilities, and Stockholder's Equity). Middle rings represent sub-categories such as current assets and long-term liabilities. The outmost rings represent individual accounts.</p>
+			<p>Use the slider at the bottom to change the year. Notice how the relative makeup changes over time. One of the most striking changes is the large increase in Stockholder's Equity and current assets during 2008-2009 and subsequent decrease around 2011.</p>
+		</div>
+		<div class="eight columns">
+			<h2 id="heading">Amazon - 2006</h2>
+			<div id="graph"></div>
+			<div id="slider"></div>
+		</div>
+	</div>
+</div>
+
+
+<script> 
+var width = 900, 
+	height = 600, 
+	radius = Math.min(width, height) / 2, 
+	color = d3.scale.category20c(); 
+
+var svg = d3.select("#graph")
+			.append("svg")
+			.attr("width", width)
+			.attr("height", height)
+			.attr("class", "u-full-width")
+			.attr("viewBox", "0 0 " + width + " " + height)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height * .50 + ")"); 
+
+var partition = d3.layout.partition() 
+						.sort(null)
+						.size([2 * Math.PI, radius * radius])
+						.value(function(d) { return d.files[8]; });
+
+var arc = d3.svg.arc()
+			.startAngle(function(d) { return d.x ; })
+			.endAngle(function(d) { return d.x + d.dx; })
+			.innerRadius(function(d) { d.y; d.dy = d.dy; return Math.sqrt(d.y); })
+			.outerRadius(function(d) { return Math.sqrt(d.y + d.dy)}); 
+
+
+
+var path = svg.datum(paths).selectAll("path").data(partition.nodes).enter().append("path")
+	.attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring 
+	.attr("d", arc) .style("stroke", "#fff")
+	.attr("class", "sections")
+	.style("fill", function(d) { return color((d.children ? d : d.parent).name); }) 
+	.style("fill-rule", "evenodd")
+	// .on("mouseover", function(d) { return changeText(0, d.value);})
+	.each(stash)
+
+var yearVals = [2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006];
+
+var initVal = paths.children[0].value;
+var cenText = d3.select("#CenterText");
+
+d3.select("#graph").select("svg").append("text")
+			.attr("x", width/2)
+			.attr("y", height/2)
+			.attr("id", "CenterText")
+			.text(initVal)
+			.style("text-anchor", "middle");
+
+function stash(d) { d.x0 = d.x; d.dx0 = d.dx; d.y0 = d.y; d.dy0 = d.dy; } // Interpolate the arcs in data space. \
+
+
+function arcTween(a) { var i = d3.interpolate({x: a.x0, dx: a.dx0, y:a.y0, dy: a.dy0}, a); return function(t) { var b = i(t); a.x0 = b.x; a.dx0 = b.dx; a.y0 = b.y; a.dy0 = b.dy; return arc(b); }; } 
+
+function changeText(startVal, endVal) {
+	d3.select("#CenterText").transition().duration(1000).tween("text", function() {
+  var i = d3.interpolateRound(startVal, endVal);
+  initVal = endVal;
+  return function(t) {
+    this.textContent = i(t);
+  };
+});
+};
+
+
+
+d3.select(self.frameElement).style("height", height + "px"); 
+
+$("#slider").noUiSlider({
+	start: [8],
+	connect: false,
+	step: 1,
+	range: {
+		'min': 0,
+		'max': 8
+	},
+	direction: "rtl"
+});
+
+
+
+$("#slider").on('change', function(){
+    var selVal = parseInt($(this).val());
+    path.data(partition.value(function(d) { return d.files[selVal]; }).nodes)
+		.transition()
+		.duration(1500)
+		.attrTween("d", arcTween);
+	var strHead = 'Amazon - ' + yearVals[selVal];
+	$("#heading").text(strHead);
+	changeText(initVal, paths.children[0].value);
+});
+
+</script>
+
+</body>
+</html>

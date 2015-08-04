@@ -1,0 +1,51 @@
+span {
+	font-size: 3rem;
+}
+
+
+.blue {
+	color: rgb(31, 119, 180);
+}
+
+.orange {
+	color: rgb(255, 127, 14);
+}
+
+.green {
+	color: rgb(44, 160, 44);
+}
+
+
+.red {
+	color: rgb(214, 39, 40);
+}
+
+.center {
+	text-align: center;
+}
+
+#main {
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+
+
+#nav {
+	position: absolute;
+	bottom: 0px;
+	list-style: none;
+	width: 200px;
+	text-align: right;
+}
+
+#navDiv {
+	float: left;
+	height: 100%;
+	width: 200px;
+	position: fixed;
+}
+
+
+#tbl {
+	overflow: auto;
+}
