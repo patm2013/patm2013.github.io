@@ -26,7 +26,7 @@
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="icon" type="image/png" href="../images/favicon-min.png">
 
   <!-- Javascript
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -49,7 +49,7 @@
       <h1 class="logo">PATRICK MOORE</h1>
       <ul class="iconLinks">
         <!-- <li class=""><a href="./blog.html" class="fade-to-white nav-link"><span class="flaticon-blogging1"></span> Blog</a></li> -->
-        <li class=""><a href="/projects/" class="active fade-to-white nav-link"><span class="flaticon-gallery6"></span> Projects</a></li>
+        <li class=""><a href="/projects/" id="projects" class="active fade-to-white nav-link"><span class="flaticon-gallery6"></span> Projects</a></li>
         <li class=""><a href="https://github.com/patm2013/" target="_blank" class="fade-to-white nav-link"><span class="flaticon-socialnetwork133"></span> GitHub</a></li>
         <li class=""><a href="https://www.linkedin.com/in/patrickrmoore" target="_blank" class="fade-to-white nav-link"><span class="flaticon-social-network21"></span> LinkedIn</a></li>
         <li class=""><a href="mailto:patrickmoore053@gmail.com" class="fade-to-white nav-link"><span class="flaticon-mail80"></span> Contact</a></li>
@@ -67,7 +67,7 @@
     </div>
         <div class="row project__container">
           <div class="columns five project__title">
-            <img class="u-max-full-width" src="../images/hys.PNG" alt="">
+            <img class="u-max-full-width" src="../images/hys-min.PNG" alt="">
           </div>
           <div class="columns seven project__description">
             <h4>Honor Yoga Studio</h4>
@@ -79,7 +79,7 @@
         <hr>
         <div class="row project__container">
           <div class="columns five project__title">
-            <img class="u-max-full-width" src="../images/calendar.PNG" alt="">
+            <img class="u-max-full-width" src="../images/calendar-min.PNG" alt="">
           </div>
           <div class="columns seven project__description">
             <h4>File Aging Calendar</h4>
@@ -92,7 +92,7 @@
 
         <div class="row project__container">
           <div class="columns five project__title">
-            <img class="u-max-full-width" src="../images/msAla.PNG" alt="">
+            <img class="u-max-full-width" src="../images/msAla-min.PNG" alt="">
           </div>
           <div class="columns seven project__description">
             <h4>Metalsmith.js Excel MD Tables</h4>
@@ -104,7 +104,7 @@
         <hr>
         <div class="row project__container">
           <div class="columns five project__title">
-            <img class="u-max-full-width" src="../images/bs.PNG" alt="">
+            <img class="u-max-full-width" src="../images/bs-min.PNG" alt="">
           </div>
           <div class="columns seven project__description">
             <h5>Balance Sheet</h5>
@@ -118,7 +118,7 @@
 
         <div class="row project__container">
           <div class="columns five project__title">
-            <img class="u-max-full-width" src="../images/alaInt.PNG" alt="">
+            <img class="u-max-full-width" src="../images/alaInt-min.PNG" alt="">
           </div>
           <div class="columns seven project__description">
             <h5>Alasql Web Interface</h5>
@@ -130,7 +130,7 @@
         <hr>
         <div class="row project__container">
           <div class="columns five project__title">
-            <img class="u-max-full-width" src="../images/firewall.png" alt="">
+            <img class="u-max-full-width" src="../images/firewall-min.png" alt="">
           </div>
           <div class="columns seven project__description">
             <h5>Firewall Chord</h5>
@@ -144,7 +144,7 @@
         
         <div class="row project__container">
           <div class="columns five project__title">
-            <img class="u-max-full-width" src="../images/MD2E.PNG" alt="">
+            <img class="u-max-full-width" src="../images/MD2E-min.PNG" alt="">
           </div>
           <div class="columns seven project__description">
             <h5>MD2E</h5>
@@ -156,7 +156,7 @@
         <hr>
         <div class="row project__container">
           <div class="columns five project__title">
-            <img class="u-max-full-width" src="../images/heatmap.PNG" alt="">
+            <img class="u-max-full-width" src="../images/heatmap-min.PNG" alt="">
           </div>
           <div class="columns seven project__description">
             <h5>Heatmap Plotter</h5>
@@ -168,7 +168,7 @@
         <hr>
         <div class="row project__container">
           <div class="columns five project__title">
-            <img class="u-max-full-width" src="../images/E2JS.PNG" alt="">
+            <img class="u-max-full-width" src="../images/E2JS-min.PNG" alt="">
           </div>
           <div class="columns seven project__description">
             <h5>E2JS</h5>
@@ -183,6 +183,27 @@
   </div>
 </div>
 </div>
+
+<script>
+
+	var navContainer = $(".nav-container");
+	var menu = $(".menu")
+	function hideNav(){
+		var w = window.innerWidth;
+		if (w < 900) {
+			navContainer.toggleClass( "nav-hidden-left" );
+			menu.toggleClass( "hidden" );
+		} else {
+			navContainer.addClass( "nav-hidden-left" );
+			menu.removeClass( "hidden" );
+		}
+		
+	}
+	var projLink = $("#projects");
+	projLink.on("click", function(e){
+		hideNav();
+	})
+</script>
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
