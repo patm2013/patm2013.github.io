@@ -117,11 +117,9 @@
 </div>
 
 <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js">
-  startD3();
 </script>
 <!-- uses jquery and d3.js frameworks, also utilizes http://bl.ocks.org/mbostock/4063318–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 <script>
-function startD3(){
 function monthPath(e){var a=new Date(e.getFullYear(),e.getMonth()+1,0),t=+day(e),l=+week(e),d=+day(a),u=+week(a);return"M"+(l+1)*cellSize+","+t*cellSize+"H"+l*cellSize+"V"+7*cellSize+"H"+u*cellSize+"V"+(d+1)*cellSize+"H"+(u+1)*cellSize+"V0H"+(l+1)*cellSize+"Z"}
 
 var dateData = [
@@ -1599,7 +1597,7 @@ var dateData = [
 
 width=960,height=136,cellSize=17,day=d3.time.format("%w"),week=d3.time.format("%U"),percent=d3.format(".1%"),format=d3.time.format("%Y-%m-%d"),color=d3.scale.linear().domain([1,250]).range(["white","red"]),svg=d3.select("#aging").selectAll("svg").data(d3.range(2010,2015)).enter().append("svg").attr("width",width).attr("height",height).attr("class","u-full-width").attr("viewBox","0 0 "+width+" "+height).style("width","100%").style("height","100%").append("g").attr("transform","translate("+(width-53*cellSize)/2+","+(height-7*cellSize-1)+")");
 svg.append("text").attr("transform","translate(-6,"+3.5*cellSize+")rotate(-90)").style("text-anchor","middle").text(function(e){return e});var rect=svg.selectAll(".day").data(function(e,a){return 4>a?d3.time.days(new Date(e,0,1),new Date(e+1,0,1)):d3.time.days(new Date(e,0,1),new Date(e,9,1))}).enter().append("rect").attr("class","day").attr("width",cellSize).attr("height",cellSize).attr("x",function(e){return week(e)*cellSize}).attr("y",function(e){return day(e)*cellSize}).datum(format);rect.append("title").text(function(e){return e}),svg.selectAll(".month").data(function(e,a){return 4>a?d3.time.months(new Date(e,0,1),new Date(e+1,0,1)):d3.time.months(new Date(e,0,1),new Date(e,9,1))}).enter().append("path").attr("class","month").attr("d",monthPath);var data=d3.nest().key(function(e){return e.date}).rollup(function(e){return e[0].values[6]}).map(dateData);rect.filter(function(e){return e in data}).style("fill",function(e){return color(data[e])}).select("title").text(function(e){return e+": "+data[e]}),$("#drop").change(function(){var e=$("#drop").val(),a=d3.nest().key(function(e){return e.date}).rollup(function(a){return a[0].values[e]}).map(dateData);rect.filter(function(e){return e in a}).transition().delay(function(e,a){return 2*a}).style("fill",function(e){return color(a[e])}).select("title").text(function(e){return e+": "+a[e]})});
-};
+
 </script>
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
