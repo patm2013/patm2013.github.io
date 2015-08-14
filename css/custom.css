@@ -112,15 +112,17 @@ body {
 }
 .nav-link:hover {
   color: #fff;
+  fill: #FFF;
 }
 .active {
   color: #fff;
+  fill: #FFF;
 }
 .iconLinks span {
   font-size: 2em;
   position: relative;
-  left: -20px;
-  top: 2px;
+  left: -10px;
+  top: 6px;
 }
 .fade-to-white {
   -webkit-transition: color 0.2s ease;
@@ -160,5 +162,13 @@ body {
 }
 
 .project__description {
+
+}
+
+svg path {
+  fill: #86b8be;
+}
+
+svg path:hover {
 
 }
