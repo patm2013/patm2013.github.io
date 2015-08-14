@@ -33,6 +33,11 @@ function startIt(){
 		sideNav();
 	});
 
+	var navLink = $(".nav-link");
+	navLink.on("click", function(e){
+		hideNav();
+	})
+
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
