@@ -66,7 +66,7 @@
       </div>
     </div>
     <form id="contactForm" action="http://formspree.io/email@patrickmoo.re" method="post">
-      <div class="row">
+      <div class="row bodyArea">
         <div class="six columns">
           <label for="NameInput">Your name</label>
           <input class="u-full-width" type="text" placeholder="Jane Doe" name="name" id="NameInput">
@@ -96,20 +96,27 @@
 </script>
   
 <script>
-  var frm = $("#contactForm");
-  var frmName = $("#NameInput");
-  var frmEmail = $("#EmailInput");
-  var frmMessage = $("#Message");
+  var $frm = $("#contactForm");
+  var msgArea = $(".bodyArea")
   var contactContainer = $(".contact");
-  frm.on("click", function(e){
+  $frm.on("click", function(e){
     e.preventDefault();
     $.ajax({
-      url: "//formspree.io/email@patrickmoo.re", 
-      method: "POST",
-      data: {message: frmMessage.val(), _replyto: frmEmail.val(), name: frmName.val()},
-      dataType: "json"
-    }).done(function(){
-      contactContainer.html("<div class='row'><div class='columns twelve><h2>Contact</h2><hr></div></div><div class='row'><div class='columns twelve'><p>Your message has been sent!</p></div></div>")
+      url: '//formspree.io/email@patrickmoo.re',
+      method: 'POST',
+      data: $(this).serialize(),
+      dataType: 'json',
+      beforeSend: function() {
+        $frm.append('<div class="alert alert--loading">Sending message…</div>');
+      },
+      success: function(data) {
+        $frm.find('.alert--loading').hide();
+        $frm.append('<div class="alert alert--success">Message sent!</div>');
+      },
+      error: function(err) {
+        $frm.find('.alert--loading').hide();
+        $frm.append('<div class="alert alert--error">Ops, there was an error.</div>');
+      }
     });
   })
 
