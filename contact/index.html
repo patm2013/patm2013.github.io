@@ -58,14 +58,14 @@
   </div>
 </div>
 <div id="main">
-  <div class="container">
+  <div class="container contact">
     <div class="row">
       <div class="columns twelve">
         <h2>Contact</h2>
         <hr>
       </div>
     </div>
-    <form action="http://formspree.io/email@patrickmoo.re" method="post">
+    <form id="contactForm" action="http://formspree.io/email@patrickmoo.re" method="post">
       <div class="row">
         <div class="six columns">
           <label for="NameInput">Your name</label>
@@ -93,6 +93,26 @@
 
   ga('create', 'UA-66081213-1', 'auto');
   ga('send', 'pageview');
+</script>
+  
+<script>
+  var frm = $("#contactForm");
+  var frmName = $("#NameInput");
+  var frmEmail = $("#EmailInput");
+  var frmMessage = $("#Message");
+  var contactContainer = $(".contact");
+  frm.on("click", function(e){
+    e.preventDefault();
+    $.ajax({
+      url: "//formspree.io/email@patrickmoo.re", 
+      method: "POST",
+      data: {message: frmMessage.val(), _replyto: frmEmail.val(), name: frmName.val()},
+      dataType: "json"
+    }).done(function(){
+      contactContainer.html("<div class='row'><div class='columns twelve><h2>Contact</h2><hr></div></div><div class='row'><div class='columns twelve'><p>Your message has been sent!</p></div></div>")
+    });
+  })
+
 </script>
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
